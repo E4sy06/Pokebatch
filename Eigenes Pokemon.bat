@@ -135,11 +135,11 @@ if '%yno%' == 'y' (
     set AnzahlSupertrank=0
     set AnzahlHypertrank=0
     set Attacke1=Blitzschlaege
-    set Attacke1Schaden=3
+    set Attacke1Schaden=6
     set Attacke2=Donnerblitz
-    set Attacke2Schaden=4
+    set Attacke2Schaden=8
     set Attacke3=Verwirrung
-    set Attacke3Schaden=2
+    set Attacke3Schaden=4
     goto :ausgewählt
 )
 goto :Pokemonwählen
@@ -176,12 +176,12 @@ echo 4) Gehe in die Wildniss
 echo 5) Gehe in die Pokemonarena
 echo 6) Gehe in den Pokeshop
 set /p Maribouoption=Waehle 
-if %Maribouoption%==1 goto :Haus
-if %Maribouoption%==2 goto :Pokemoncenter
-if %Maribouoption%==3 goto :Pokemonlabor
-if %Maribouoption%==4 goto :Wildniss
-if %Maribouoption%==5 goto :Arena
-if %Maribouoption%==6 goto :Pokeshop
+if %Maribouoption%==1 goto Haus
+if %Maribouoption%==2 goto Pokemoncenter
+if %Maribouoption%==3 goto Pokemonlabor
+if %Maribouoption%==4 goto Wildniss
+if %Maribouoption%==5 goto startArena
+if %Maribouoption%==6 goto Pokeshop
 goto :Maribou
 
 :Haus
@@ -486,7 +486,7 @@ pause
 echo %wildespokemonname% setzt Tackel ein.
 pause
 cls
-set /a Schadenanpokemon=(2*%wildespokemonlevel%)
+set /a Schadenanpokemon=%wildespokemonlevel%
 set /a pokemonhp=(pokemonhp-(Schadenanpokemon-pokemonverteidigung))
 if %pokemonhp% LEQ 0 goto :wildespokemongewonnen
 cls
@@ -528,8 +528,7 @@ pause
 set /a pokemonxp=(%pokemonxp%+%Gewonnenxp%)
 goto :Maribou
 
-
-:Arena
+:startArena
 cls
 if %ArenaSiege%==0 (
     echo Willkommen in der Pokemonarena, Frischling
@@ -609,7 +608,6 @@ if %ArenaSiege%==3 (
     set Arenapokemonname=Bisaflor
     set ArenaPokemonlevel=50
     goto :Arenakampfstart
-)
 )
 if %ArenaSiege%==4 (
     echo Wir werden dich diesmal aufhalten!
@@ -839,11 +837,12 @@ echo Wie kann ich dir helfen?
 echo 1) Etwas Kaufen 
 echo 2) Weggehen
 set /p Pokeshopauswahl=:
+
 if %Pokeshopauswahl%==1 (
-    echo Was willst du kaufen?
-    echo 1) Trank (Du bestitzt %Anzahltrank%)
-    echo 2) Supertrank (Du bestitzt %AnzahlSupertrank%)
-    echo 3) Hypertrank (Du bestitzt %AnzahlHypertrank%)
+    echo "Was willst du kaufen?"
+    echo "1) Trank (Du bestitzt %Anzahltrank%)"
+    echo "2) Supertrank (Du bestitzt %AnzahlSupertrank%)"
+    echo "3) Hypertrank (Du bestitzt %AnzahlHypertrank%)"
     set /p Pokeshop_kaufenauswahl=:
     if %Pokeshop_kaufenauswahl%==1 (
         if %Geld% GEQ 10 (
