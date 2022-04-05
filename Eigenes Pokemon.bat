@@ -173,16 +173,26 @@ echo 1) Du gehst in dein Haus
 echo 2) Gehe ins Pokemoncenter 
 echo 3) Gehe ins Pokemonlabor
 echo 4) Gehe in die Wildniss
-echo 5) Gehe in die Pokemonarena
-echo 6) Gehe in den Pokeshop
+echo 6) Gehe in die Pokemonarena
+echo 7) Gehe in den Pokeshop
 set /p Maribouoption=Waehle 
-if %Maribouoption%==1 goto Haus
-if %Maribouoption%==2 goto Pokemoncenter
-if %Maribouoption%==3 goto Pokemonlabor
-if %Maribouoption%==4 goto Wildniss
-if %Maribouoption%==5 goto startArena
-if %Maribouoption%==6 goto Pokeshop
-goto :Maribou
+if %Maribouoption%==1 (
+    goto Haus
+)
+if %Maribouoption%==2 (
+    goto Pokemoncenter
+)
+if %Maribouoption%==3 (
+    goto Pokemonlabor
+)
+if %Maribouoption%==4 (
+    goto Wildniss
+)
+if %Maribouoption%==6 goto startArena
+if %Maribouoption%==7 (
+    goto Pokeshop
+)
+else goto Maribou
 
 :Haus
 cls
@@ -503,7 +513,7 @@ echo   \---------------------------------------------------\
 echo.
 echo HP: %pokemonhp%
 pause
-goto :Kampfrundepokemon
+goto Kampfrundepokemon
 
 :pokemongewonnen
 cls
@@ -515,7 +525,7 @@ echo %pokemonname% hat %Gewonnenxp% bekommen
 pause
 set /a pokemonxp=(%pokemonxp%+%Gewonnenxp%)
 set /a Geld=(%Geld%+%GewonnenesGeld%)
-goto :Maribou
+goto Maribou
 
 :wildespokemongewonnen
 cls
@@ -526,11 +536,11 @@ set /a Gewonnenxp=(wildespokemonlevel*1)
 echo %pokemonname% hat %Gewonnenxp% bekommen
 pause
 set /a pokemonxp=(%pokemonxp%+%Gewonnenxp%)
-goto :Maribou
+goto Maribou
 
 :startArena
-cls
-if %ArenaSiege%==0 (
+if %ArenaSiege% == 0 (
+    cls
     echo Willkommen in der Pokemonarena, Frischling
     echo Ich werde dir erklären was du tun musst!
     echo Eigentlich ist es ganz einfach!
@@ -539,8 +549,10 @@ if %ArenaSiege%==0 (
     echo die Pokemon werden Level 7 sein
     echo Bereit?
     echo schreib y wenn du starten willst
-    set /p Arena1auswahl=
-    if not %Arena1auswahl%==y goto :Maribou
+    set /p Arena1auswahl=?
+    if not %Arena1auswahl%==y (
+        goto Maribou
+    )
     cls
     set Kampf=0
     echo Gut dann lass uns beginnen
@@ -551,8 +563,7 @@ if %ArenaSiege%==0 (
     set ArenaPokemonlevel=7
     goto :Arenakampfstart
 )
-
-if %ArenaSiege%==1 (
+if %ArenaSiege% == 1 (
     echo Du bist es wieder!
     echo Na suchst du wieder nen Kampf?
     echo Denn sollst du bekommen
@@ -560,7 +571,9 @@ if %ArenaSiege%==1 (
     echo Also wollen wir starten?
     echo Dann tippe y ein
     set /p Arena2auswahl=
-    if not %Arena2auswahl%==y goto :Maribou
+    if not %Arena2auswahl%==y (
+        goto Maribou
+    )
     cls
     set Kampf=0
     echo Ja, dann viel Glück
@@ -572,14 +585,16 @@ if %ArenaSiege%==1 (
     set ArenaPokemonlevel=12
     goto :Arenakampfstart
 )
-if %ArenaSiege%==2 (
+if %ArenaSiege% == 2 (
     echo Na suchst du die Niederlage?
     echo Die sollst du bekommen!
     echo Nun haben die Pokemon Level von 25 
     echo Also wollen wir starten?
     echo Dann tippe y ein
     set /p Arena3auswahl=
-    if not %Arena3auswahl%==y goto :Maribou
+    if not %Arena3auswahl%==y (
+        goto Maribou
+    )
     cls
     set Kampf=0
     echo Ja, dann viel Glück
@@ -591,13 +606,15 @@ if %ArenaSiege%==2 (
     set ArenaPokemonlevel=25
     goto :Arenakampfstart
 )
-if %ArenaSiege%==3 (
+if %ArenaSiege% == 3 (
     echo Wir werden dich diesmal aufhalten!
     echo Nun haben die Pokemon Level von 50
     echo Also wollen wir starten?
     echo Dann tippe y ein
     set /p Arena4auswahl=
-    if not %Arena4auswahl%==y goto :Maribou
+    if not %Arena4auswahl%==y (
+        goto Maribou
+    )
     cls
     set Kampf=0
     echo Ja, dann viel Glück
@@ -609,13 +626,15 @@ if %ArenaSiege%==3 (
     set ArenaPokemonlevel=50
     goto :Arenakampfstart
 )
-if %ArenaSiege%==4 (
+if %ArenaSiege% == 4 (
     echo Wir werden dich diesmal aufhalten!
     echo Nun haben die Pokemon Level von 100
     echo Also wollen wir starten?
     echo Dann tippe y ein
     set /p Arena5auswahl=
-    if not %Arena5auswahl%==y goto :Maribou
+    if not %Arena5auswahl%==y (
+        goto Maribou
+    )
     cls
     set Kampf=0
     echo Ja, dann viel Glück
@@ -629,6 +648,7 @@ if %ArenaSiege%==4 (
 )
 
 :Arenakampfstart
+
 set /a Kampf=(%Kampf%+1)
 if %Kampf%==5 (
     echo Du hast gewonnen
@@ -688,14 +708,14 @@ echo 3) %Attacke3%
 set /p Kampfrundepokemon_attackeoptionen_arena=Eingeben:
 if %Kampfrundepokemon_attackeoptionen_arena%==1 (
     set /a SchadenanArenapokemon=(%pokemonangriff%*%Attacke1Schaden%)
-    goto :KampfrundeArenapokemon
+    goto KampfrundeArenapokemon
 if %Kampfrundepokemon_attackeoptionen_arena%==2 (
     set /a SchadenanArenapokemon=(%pokemonangriff%*%Attacke2Schaden%)
-    goto :KampfrundeArenapokemon
+    goto KampfrundeArenapokemon
 if %Kampfrundepokemon_attackeoptionen_arena%==3 (
     set /a SchadenanArenapokemon=(%pokemonangriff%*%Attacke3Schaden%)
-    goto :KampfrundeArenapokemon
-goto :Kampfrundepokemon_attacke_arena
+    goto KampfrundeArenapokemon
+goto Kampfrundepokemon_attacke_arena
 
 :Kampfrundepokemon_Iteams_arena
 cls
@@ -706,9 +726,9 @@ echo 3) %AnzahlHypertrank% Hypertrank/Hypertänke
 echo 4) Zurück
 echo Was willst du einsetzten/tun?
 set /p Kampfrundepokemon_Iteamsauswahl_arena=:
-if %Kampfrundepokemon_Iteamsauswahl_arena%==1 goto :Kampfrundepokemon_Iteams_1_arena
-if %Kampfrundepokemon_Iteamsauswahl_arena%==2 goto :Kampfrundepokemon_Iteams_2_arena
-if %Kampfrundepokemon_Iteamsauswahl_arena%==3 goto :Kampfrundepokemon_Iteams_3_arena
+if %Kampfrundepokemon_Iteamsauswahl_arena%==1 goto Kampfrundepokemon_Iteams_1_arena
+if %Kampfrundepokemon_Iteamsauswahl_arena%==2 goto Kampfrundepokemon_Iteams_2_arena
+if %Kampfrundepokemon_Iteamsauswahl_arena%==3 goto Kampfrundepokemon_Iteams_3_arena
 
 :Kampfrundepokemon_Iteams_1_arena
 echo Du willst einen Trank einsetzten
